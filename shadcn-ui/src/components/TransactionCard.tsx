@@ -1,5 +1,6 @@
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { CURRENCY_SYMBOLS } from '@/constants/currency';
 import {
     ShoppingCart,
     Car,
@@ -91,7 +92,7 @@ const TransactionCard = ({ transaction }: TransactionCardProps) => {
                 <div className="flex items-center gap-2">
                     {getTypeIcon(transaction.type)}
                     <span className={`font-semibold ${getTypeColor(transaction.type)}`}>
-                        {transaction.type === 'expense' ? '-' : '+'}${Math.abs(transaction.amount).toLocaleString()}
+                        {transaction.type === 'expense' ? '-' : '+'} {Math.abs(transaction.amount).toLocaleString()} {CURRENCY_SYMBOLS}
                     </span>
                 </div>
             </div>

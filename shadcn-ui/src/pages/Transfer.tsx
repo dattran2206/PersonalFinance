@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { toast } from 'sonner';
+import { CURRENCY_SYMBOLS } from '@/constants/currency';
 
 interface Wallet {
     id: string;
@@ -158,14 +159,14 @@ const Transfer = () => {
                                 <SelectContent>
                                     {wallets.map((wallet) => (
                                         <SelectItem key={wallet.id} value={wallet.id}>
-                                            {wallet.name} (${wallet.balance.toLocaleString()})
+                                            {wallet.name} ({wallet.balance.toLocaleString()}{CURRENCY_SYMBOLS})
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
                             </Select>
                             {sourceWalletObj && (
                                 <p className="text-sm text-gray-600">
-                                    Available balance: ${sourceWalletObj.balance.toLocaleString()}
+                                    Available balance: {sourceWalletObj.balance.toLocaleString()}{CURRENCY_SYMBOLS}
                                 </p>
                             )}
                         </div>
@@ -189,14 +190,14 @@ const Transfer = () => {
                                         .filter(wallet => wallet.id !== sourceWallet)
                                         .map((wallet) => (
                                             <SelectItem key={wallet.id} value={wallet.id}>
-                                                {wallet.name} (${wallet.balance.toLocaleString()})
+                                                {wallet.name} ({wallet.balance.toLocaleString()}{CURRENCY_SYMBOLS})
                                             </SelectItem>
                                         ))}
                                 </SelectContent>
                             </Select>
                             {targetWalletObj && (
                                 <p className="text-sm text-gray-600">
-                                    Current balance: ${targetWalletObj.balance.toLocaleString()}
+                                    Current balance: {targetWalletObj.balance.toLocaleString()}{CURRENCY_SYMBOLS}
                                 </p>
                             )}
                         </div>
@@ -240,7 +241,7 @@ const Transfer = () => {
                                 <h3 className="font-semibold text-blue-800 mb-2">Transfer Summary</h3>
                                 <div className="space-y-1 text-sm text-blue-700">
                                     <p>From: {sourceWalletObj.name} → {targetWalletObj.name}</p>
-                                    <p>Amount: ${parseFloat(amount).toLocaleString()}</p>
+                                    <p>Amount: {parseFloat(amount).toLocaleString()}{CURRENCY_SYMBOLS}</p>
                                     <p>
                                         {sourceWalletObj.name} balance after: $
                                         {(sourceWalletObj.balance - parseFloat(amount)).toLocaleString()}

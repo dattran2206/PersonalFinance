@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { Coffee, Car, Home, Gamepad2, ShoppingCart, Heart, Plus, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
+import { CURRENCY_SYMBOLS } from '@/constants/currency';
 
 interface Wallet {
     id: string;
@@ -197,7 +198,7 @@ const AddTransaction = () => {
                                     >
                                         <Icon className="h-5 w-5" />
                                         <span className="text-sm">{expense.name}</span>
-                                        <Badge variant="secondary" className="text-xs">${expense.amount}</Badge>
+                                        <Badge variant="secondary" className="text-xs">{expense.amount} {CURRENCY_SYMBOLS}</Badge>
                                     </Button>
                                 );
                             })}
@@ -219,7 +220,7 @@ const AddTransaction = () => {
                                 >
                                     <div className="text-left">
                                         <div className="font-medium">{template.name}</div>
-                                        <div className="text-sm text-gray-500">${template.amount} • {template.category}</div>
+                                        <div className="text-sm text-gray-500">{template.amount} {CURRENCY_SYMBOLS} • {template.category}</div>
                                     </div>
                                 </Button>
                             ))}
@@ -283,7 +284,7 @@ const AddTransaction = () => {
                                 <SelectContent>
                                     {wallets.map((wallet) => (
                                         <SelectItem key={wallet.id} value={wallet.id}>
-                                            {wallet.name} (${wallet.balance.toLocaleString()})
+                                            {wallet.name} ({wallet.balance.toLocaleString()}{CURRENCY_SYMBOLS})
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
@@ -306,8 +307,8 @@ const AddTransaction = () => {
                         <Button
                             type="submit"
                             className={`w-full ${transactionType === 'expense'
-                                    ? 'bg-red-600 hover:bg-red-700'
-                                    : 'bg-green-600 hover:bg-green-700'
+                                ? 'bg-red-600 hover:bg-red-700'
+                                : 'bg-green-600 hover:bg-green-700'
                                 }`}
                         >
                             <Plus className="h-4 w-4 mr-2" />

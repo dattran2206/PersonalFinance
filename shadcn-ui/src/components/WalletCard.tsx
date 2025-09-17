@@ -1,5 +1,6 @@
 import { Card } from '@/components/ui/card';
 import { Wallet, CreditCard, Smartphone, Banknote } from 'lucide-react';
+import { CURRENCY_SYMBOLS } from '@/constants/currency';
 
 interface WalletCardProps {
     wallet: {
@@ -51,7 +52,7 @@ const WalletCard = ({ wallet }: WalletCardProps) => {
                 </div>
                 <div className="text-right">
                     <p className="text-lg font-semibold text-gray-800">
-                        ${wallet.balance.toLocaleString()}
+                        {wallet.balance.toLocaleString()} {CURRENCY_SYMBOLS}
                     </p>
                 </div>
             </div>

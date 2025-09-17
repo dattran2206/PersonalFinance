@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ArrowLeft, Target, Plus, TrendingUp, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { CURRENCY_SYMBOLS } from '@/constants/currency';
 
 interface SavingGoal {
     id: string;
@@ -248,7 +249,7 @@ const SavingGoals = () => {
                             <div>
                                 <p className="text-sm text-blue-600 font-medium">Total Saved</p>
                                 <p className="text-3xl font-bold text-blue-800">
-                                    ${savingGoals.reduce((sum, goal) => sum + goal.saved, 0).toLocaleString()}
+                                    {savingGoals.reduce((sum, goal) => sum + goal.saved, 0).toLocaleString()}{CURRENCY_SYMBOLS}
                                 </p>
                             </div>
                             <div className="p-3 bg-blue-200 rounded-full">
@@ -262,7 +263,7 @@ const SavingGoals = () => {
                             <div>
                                 <p className="text-sm text-purple-600 font-medium">Total Target</p>
                                 <p className="text-3xl font-bold text-purple-800">
-                                    ${savingGoals.reduce((sum, goal) => sum + goal.target, 0).toLocaleString()}
+                                    {savingGoals.reduce((sum, goal) => sum + goal.target, 0).toLocaleString()}{CURRENCY_SYMBOLS}
                                 </p>
                             </div>
                             <div className="p-3 bg-purple-200 rounded-full">
@@ -295,7 +296,7 @@ const SavingGoals = () => {
                                         <div>
                                             <h3 className="text-xl font-semibold text-gray-800">{goal.name}</h3>
                                             <p className="text-gray-600">
-                                                ${goal.saved.toLocaleString()} of ${goal.target.toLocaleString()} saved
+                                                {goal.saved.toLocaleString()}{CURRENCY_SYMBOLS} of {goal.target.toLocaleString()}{CURRENCY_SYMBOLS} saved
                                             </p>
                                         </div>
                                         <div className="flex items-center gap-2">
@@ -357,7 +358,7 @@ const SavingGoals = () => {
                                     <div className="flex items-center justify-between text-sm text-blue-700">
                                         <span>Current Progress</span>
                                         <span>
-                                            ${selectedGoal.saved.toLocaleString()} / ${selectedGoal.target.toLocaleString()}
+                                            {selectedGoal.saved.toLocaleString()}{CURRENCY_SYMBOLS} / {selectedGoal.target.toLocaleString()}{CURRENCY_SYMBOLS}
                                         </span>
                                     </div>
                                     <Progress
@@ -365,7 +366,7 @@ const SavingGoals = () => {
                                         className="mt-2 h-2"
                                     />
                                     <p className="text-xs text-blue-600 mt-1">
-                                        ${(selectedGoal.target - selectedGoal.saved).toLocaleString()} remaining
+                                        {(selectedGoal.target - selectedGoal.saved).toLocaleString()}{CURRENCY_SYMBOLS} remaining
                                     </p>
                                 </div>
 
@@ -393,7 +394,7 @@ const SavingGoals = () => {
                                             <SelectContent>
                                                 {wallets.map((wallet) => (
                                                     <SelectItem key={wallet.id} value={wallet.id}>
-                                                        {wallet.name} (${wallet.balance.toLocaleString()})
+                                                        {wallet.name} ({wallet.balance.toLocaleString()}{CURRENCY_SYMBOLS})
                                                     </SelectItem>
                                                 ))}
                                             </SelectContent>
@@ -402,7 +403,7 @@ const SavingGoals = () => {
 
                                     <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
                                         <Plus className="h-4 w-4 mr-2" />
-                                        Contribute ${contributeAmount || '0'}
+                                        Contribute {contributeAmount || '0'}{CURRENCY_SYMBOLS}
                                     </Button>
                                 </form>
                             </div>

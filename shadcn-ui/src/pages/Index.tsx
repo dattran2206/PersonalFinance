@@ -6,6 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import WalletCard from '@/components/WalletCard';
 import TransactionCard from '@/components/TransactionCard';
 import { Plus, TrendingUp, TrendingDown, Target } from 'lucide-react';
+import { CURRENCY_SYMBOLS } from '@/constants/currency';
 
 interface Wallet {
     id: string;
@@ -44,9 +45,10 @@ const Dashboard = () => {
 
         if (!savedWallets) {
             const initialWallets: Wallet[] = [
-                { id: '1', name: 'Cash', balance: 500, type: 'cash' },
-                { id: '2', name: 'Bank Account', balance: 2500, type: 'bank' },
-                { id: '3', name: 'MoMo Wallet', balance: 150, type: 'momo' },
+                { id: '1', name: 'Tiền mặt', balance: 500, type: 'cash' },
+                { id: '2', name: 'Techcombank', balance: 2500, type: 'bank' },
+                { id: '3', name: 'Vietcombank', balance: 150, type: 'bank' },
+                { id: '4', name: 'Momo', balance: 150, type: 'momo' },
             ];
             localStorage.setItem('wallets', JSON.stringify(initialWallets));
             setWallets(initialWallets);
@@ -92,9 +94,9 @@ const Dashboard = () => {
 
         if (!savedGoals) {
             const initialGoals: SavingGoal[] = [
-                { id: '1', name: 'Buy Laptop', target: 1500, saved: 600 },
-                { id: '2', name: 'Travel Fund', target: 2000, saved: 350 },
-                { id: '3', name: 'Emergency Fund', target: 5000, saved: 1200 },
+                { id: '1', name: 'Mua Laptop', target: 1500, saved: 600 },
+                { id: '2', name: 'Đi du lịch với eiu', target: 2000, saved: 350 },
+                { id: '3', name: 'Mua điện thoại', target: 5000, saved: 1200 },
             ];
             localStorage.setItem('savingGoals', JSON.stringify(initialGoals));
             setSavingGoals(initialGoals);
@@ -128,12 +130,12 @@ const Dashboard = () => {
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
-                    <p className="text-gray-600">Welcome back! Here's your financial overview.</p>
+                    <p className="text-gray-600">Chào mừng bạn trở lại! Dưới đây là tổng quan về tài chính của bạn.</p>
                 </div>
                 <Link to="/add-transaction">
                     <Button className="bg-blue-600 hover:bg-blue-700">
                         <Plus className="h-4 w-4 mr-2" />
-                        Add Transaction
+                        Thêm giao dịch
                     </Button>
                 </Link>
             </div>
@@ -143,8 +145,8 @@ const Dashboard = () => {
                 <Card className="p-6 bg-gradient-to-r from-blue-50 to-blue-100">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-sm text-blue-600 font-medium">Total Balance</p>
-                            <p className="text-3xl font-bold text-blue-800">${totalBalance.toLocaleString()}</p>
+                            <p className="text-sm text-blue-600 font-medium">Tổng số dư</p>
+                            <p className="text-3xl font-bold text-blue-800">{totalBalance.toLocaleString()} {CURRENCY_SYMBOLS}</p>
                         </div>
                         <div className="p-3 bg-blue-200 rounded-full">
                             <TrendingUp className="h-6 w-6 text-blue-600" />
@@ -155,8 +157,8 @@ const Dashboard = () => {
                 <Card className="p-6 bg-gradient-to-r from-green-50 to-green-100">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-sm text-green-600 font-medium">Monthly Income</p>
-                            <p className="text-3xl font-bold text-green-800">${monthlyIncome.toLocaleString()}</p>
+                            <p className="text-sm text-green-600 font-medium">Thu nhập hàng tháng</p>
+                            <p className="text-3xl font-bold text-green-800">{monthlyIncome.toLocaleString()} {CURRENCY_SYMBOLS}</p>
                         </div>
                         <div className="p-3 bg-green-200 rounded-full">
                             <TrendingUp className="h-6 w-6 text-green-600" />
@@ -167,8 +169,8 @@ const Dashboard = () => {
                 <Card className="p-6 bg-gradient-to-r from-red-50 to-red-100">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-sm text-red-600 font-medium">Monthly Expenses</p>
-                            <p className="text-3xl font-bold text-red-800">${monthlyExpenses.toLocaleString()}</p>
+                            <p className="text-sm text-red-600 font-medium">Chi phí hàng tháng</p>
+                            <p className="text-3xl font-bold text-red-800">{monthlyExpenses.toLocaleString()} {CURRENCY_SYMBOLS}</p>
                         </div>
                         <div className="p-3 bg-red-200 rounded-full">
                             <TrendingDown className="h-6 w-6 text-red-600" />
@@ -180,7 +182,7 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Wallets */}
                 <Card className="p-6">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Your Wallets</h2>
+                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Ví của bạn</h2>
                     <div className="space-y-3">
                         {wallets.map((wallet) => (
                             <WalletCard key={wallet.id} wallet={wallet} />
@@ -190,16 +192,16 @@ const Dashboard = () => {
 
                 {/* Spending by Category */}
                 <Card className="p-6">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Spending by Category</h2>
+                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Chi tiêu theo mục</h2>
                     <div className="space-y-4">
                         {Object.entries(categorySpending).map(([category, amount]) => (
                             <div key={category} className="flex items-center justify-between">
                                 <span className="text-gray-700">{category}</span>
-                                <span className="font-semibold text-red-600">${amount.toLocaleString()}</span>
+                                <span className="font-semibold text-red-600">{amount.toLocaleString()} {CURRENCY_SYMBOLS}</span>
                             </div>
                         ))}
                         {Object.keys(categorySpending).length === 0 && (
-                            <p className="text-gray-500 text-center py-4">No spending data available</p>
+                            <p className="text-gray-500 text-center py-4">Không có dữ liệu chi tiêu nào có sẵn</p>
                         )}
                     </div>
                 </Card>
@@ -209,9 +211,9 @@ const Dashboard = () => {
                 {/* Recent Transactions */}
                 <Card className="p-6">
                     <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-xl font-semibold text-gray-800">Recent Transactions</h2>
+                        <h2 className="text-xl font-semibold text-gray-800">Giao dịch gần đây</h2>
                         <Link to="/add-transaction">
-                            <Button variant="outline" size="sm">View All</Button>
+                            <Button variant="outline" size="sm">Xem tất cả</Button>
                         </Link>
                     </div>
                     <div className="space-y-3">
@@ -219,7 +221,7 @@ const Dashboard = () => {
                             <TransactionCard key={transaction.id} transaction={transaction} />
                         ))}
                         {recentTransactions.length === 0 && (
-                            <p className="text-gray-500 text-center py-4">No transactions yet</p>
+                            <p className="text-gray-500 text-center py-4">Chưa có giao dịch nào</p>
                         )}
                     </div>
                 </Card>
@@ -227,11 +229,11 @@ const Dashboard = () => {
                 {/* Saving Goals Preview */}
                 <Card className="p-6">
                     <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-xl font-semibold text-gray-800">Saving Goals</h2>
+                        <h2 className="text-xl font-semibold text-gray-800">Mục tiêu tiết kiệm</h2>
                         <Link to="/saving-goals">
                             <Button variant="outline" size="sm">
                                 <Target className="h-4 w-4 mr-1" />
-                                View All
+                                Xem tất cả
                             </Button>
                         </Link>
                     </div>
@@ -241,14 +243,14 @@ const Dashboard = () => {
                                 <div className="flex items-center justify-between">
                                     <span className="font-medium text-gray-800">{goal.name}</span>
                                     <span className="text-sm text-gray-600">
-                                        ${goal.saved.toLocaleString()} / ${goal.target.toLocaleString()}
+                                        {goal.saved.toLocaleString()} {CURRENCY_SYMBOLS} / {goal.target.toLocaleString()} {CURRENCY_SYMBOLS}
                                     </span>
                                 </div>
                                 <Progress value={(goal.saved / goal.target) * 100} className="h-2" />
                             </div>
                         ))}
                         {savingGoals.length === 0 && (
-                            <p className="text-gray-500 text-center py-4">No saving goals set</p>
+                            <p className="text-gray-500 text-center py-4">Không có mục tiêu tiết kiệm</p>
                         )}
                     </div>
                 </Card>
