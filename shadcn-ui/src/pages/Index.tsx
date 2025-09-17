@@ -43,66 +43,54 @@ const Dashboard = () => {
         const savedTransactions = localStorage.getItem('transactions');
         const savedGoals = localStorage.getItem('savingGoals');
 
-        if (!savedWallets) {
-            const initialWallets: Wallet[] = [
-                { id: '1', name: 'Tiền mặt', balance: 500, type: 'cash' },
-                { id: '2', name: 'Techcombank', balance: 2500, type: 'bank' },
-                { id: '3', name: 'Vietcombank', balance: 150, type: 'bank' },
-                { id: '4', name: 'Momo', balance: 150, type: 'momo' },
-            ];
-            localStorage.setItem('wallets', JSON.stringify(initialWallets));
-            setWallets(initialWallets);
-        } else {
-            setWallets(JSON.parse(savedWallets));
-        }
+        const initialWallets: Wallet[] = [
+            { id: '1', name: 'Tiền mặt', balance: 500, type: 'cash' },
+            { id: '2', name: 'Techcombank', balance: 2500, type: 'bank' },
+            { id: '3', name: 'Vietcombank', balance: 150, type: 'bank' },
+            { id: '4', name: 'Momo', balance: 150, type: 'momo' },
+        ];
+        localStorage.setItem('wallets', JSON.stringify(initialWallets));
+        setWallets(initialWallets);
+        
+        const initialTransactions: Transaction[] = [
+            {
+                id: '1',
+                amount: -25,
+                category: 'Food',
+                wallet: 'Cash',
+                type: 'expense',
+                note: 'Lunch at restaurant',
+                date: new Date().toISOString(),
+            },
+            {
+                id: '2',
+                amount: -15,
+                category: 'Transport',
+                wallet: 'MoMo Wallet',
+                type: 'expense',
+                note: 'Grab ride to office',
+                date: new Date(Date.now() - 86400000).toISOString(),
+            },
+            {
+                id: '3',
+                amount: 1000,
+                category: 'Salary',
+                wallet: 'Bank Account',
+                type: 'income',
+                note: 'Monthly salary',
+                date: new Date(Date.now() - 172800000).toISOString(),
+            },
+        ];
+        localStorage.setItem('transactions', JSON.stringify(initialTransactions));
+        setTransactions(initialTransactions);
 
-        if (!savedTransactions) {
-            const initialTransactions: Transaction[] = [
-                {
-                    id: '1',
-                    amount: -25,
-                    category: 'Food',
-                    wallet: 'Cash',
-                    type: 'expense',
-                    note: 'Lunch at restaurant',
-                    date: new Date().toISOString(),
-                },
-                {
-                    id: '2',
-                    amount: -15,
-                    category: 'Transport',
-                    wallet: 'MoMo Wallet',
-                    type: 'expense',
-                    note: 'Grab ride to office',
-                    date: new Date(Date.now() - 86400000).toISOString(),
-                },
-                {
-                    id: '3',
-                    amount: 1000,
-                    category: 'Salary',
-                    wallet: 'Bank Account',
-                    type: 'income',
-                    note: 'Monthly salary',
-                    date: new Date(Date.now() - 172800000).toISOString(),
-                },
-            ];
-            localStorage.setItem('transactions', JSON.stringify(initialTransactions));
-            setTransactions(initialTransactions);
-        } else {
-            setTransactions(JSON.parse(savedTransactions));
-        }
-
-        if (!savedGoals) {
-            const initialGoals: SavingGoal[] = [
-                { id: '1', name: 'Mua Laptop', target: 1500, saved: 600 },
-                { id: '2', name: 'Đi du lịch với eiu', target: 2000, saved: 350 },
-                { id: '3', name: 'Mua điện thoại', target: 5000, saved: 1200 },
-            ];
-            localStorage.setItem('savingGoals', JSON.stringify(initialGoals));
-            setSavingGoals(initialGoals);
-        } else {
-            setSavingGoals(JSON.parse(savedGoals));
-        }
+        const initialGoals: SavingGoal[] = [
+            { id: '1', name: 'Mua xe', target: 1500, saved: 600 },
+            { id: '2', name: 'Đi du lịch', target: 2000, saved: 350 },
+            { id: '3', name: 'Mua điện thoại', target: 5000, saved: 1200 },
+        ];
+        localStorage.setItem('savingGoals', JSON.stringify(initialGoals));
+        setSavingGoals(initialGoals);
     }, []);
 
     const totalBalance = wallets.reduce((sum, wallet) => sum + wallet.balance, 0);
